@@ -64,4 +64,3 @@ class UserDetailView(generics.RetrieveAPIView):
     permission_classes = [permissions.AllowAny]
     lookup_field = 'username'
 
-
