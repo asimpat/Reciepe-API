@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticatedOrReadOnly, IsAuthenticated
 from django.db.models import Q
 from .models import Recipe
-from  import (
+from .serializers import (
     RecipeSerializer,
     RecipeListSerializer,
     RecipeCreateUpdateSerializer
