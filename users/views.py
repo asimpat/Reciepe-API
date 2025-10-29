@@ -63,3 +63,5 @@ class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.AllowAny]
     lookup_field = 'username'
+
+
