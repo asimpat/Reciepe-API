@@ -1,9 +1,9 @@
 from rest_framework import serializers
-from users.serializers import UserSerializer
+from users.serializers import UserProfileSerializer
 from .models import Recipe
 
 class RecipeSerializer(serializers.ModelSerializer):
-    author = UserSerializer(read_only=True)
+    author = UserProfileSerializer(read_only=True)
     author_username = serializers.CharField(
         source='author.username', read_only=True)
     average_rating = serializers.ReadOnlyField()
