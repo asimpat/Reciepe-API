@@ -163,3 +163,25 @@ class Recipe(models.Model):
     def saves_count(self):
         """Get total number of saves"""
         return self.saved_by.count()
+
+
+class Rating(models.Model):
+    recipe = models.ForeignKey(
+        Recipe,
+        on_delete=models.CASCADE,
+        related_name='ratings'
+    )
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE
+    )
+    score = models.PositiveSmallIntegerField(default=1)
+    comment = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('recipe', 'user')  # Prevent duplicate user ratings
+        ordering = ['-created_at']
+
+    def __str__(self):
+        return f"{self.user.username} rated {self.recipe.title} ({self.score})"
