@@ -9,19 +9,23 @@ from .serializers import (
     RecipeCreateUpdateSerializer
 )
 from .permissions import IsAuthorOrReadOnly
+from django_filters.rest_framework import DjangoFilterBackend
 
 
 class RecipeListCreateView(generics.ListCreateAPIView):
-    """
-    GET: List all recipes with search and filters
-    POST: Create a new recipe (authenticated users only)
-    """
+  
     queryset = Recipe.objects.all().select_related('author')
     permission_classes = [IsAuthenticatedOrReadOnly]
-    filter_backends = [filters.SearchFilter, filters.OrderingFilter]
+    filter_backends = [
+        DjangoFilterBackend,
+        filters.SearchFilter,
+        filters.OrderingFilter
+    ]
+    # filter_backends = [filters.SearchFilter, filters.OrderingFilter]
     search_fields = ['title', 'description', 'ingredients']
     ordering_fields = ['created_at', 'title', 'prep_time', 'cook_time']
     ordering = ['-created_at']
+  
 
     def get_serializer_class(self):
         """Use different serializers for list and create"""
