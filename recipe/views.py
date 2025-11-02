@@ -36,9 +36,8 @@ class RecipeListCreateView(generics.ListCreateAPIView):
         return RecipeListSerializer
 
     def get_queryset(self):
-        """
-        Apply filters based on query parameters
-        """
+        # Apply filters based on query parameters
+    
         queryset = super().get_queryset()
 
         # Filter by cuisine type
