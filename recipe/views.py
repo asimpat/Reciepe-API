@@ -95,13 +95,11 @@ class RecipeDetailView(generics.RetrieveUpdateDestroyAPIView):
     lookup_field = 'pk'
 
     def get_serializer_class(self):
-        """Use different serializers for retrieve and update"""
         if self.request.method in ['PUT', 'PATCH']:
             return RecipeCreateUpdateSerializer
         return RecipeSerializer
 
     def retrieve(self, request, *args, **kwargs):
-        """Override retrieve to increment view count"""
         instance = self.get_object()
 
         # Increment view count
