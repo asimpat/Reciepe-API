@@ -69,11 +69,11 @@ class RecipeListCreateView(generics.ListCreateAPIView):
         return queryset
 
     def perform_create(self, serializer):
-        """Set the author to the current user when creating"""
+     
         serializer.save(author=self.request.user)
 
     def create(self, request, *args, **kwargs):
-        """Override create to return custom response"""
+     
         serializer = self.get_serializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_create(serializer)
