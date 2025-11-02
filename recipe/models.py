@@ -136,27 +136,27 @@ class Recipe(models.Model):
 
     @property
     def total_time(self):
-        """Calculate total cooking time"""
+        # Calculate total cooking time
         prep = self.prep_time or 0
         cook = self.cook_time or 0
         return prep + cook
 
     @property
     def average_rating(self):
-        """Calculate average rating from all ratings"""
-        ratings = self.ratings.all()
+        # Calculate average rating from all ratings
+        ratings = self.recipe_ratings.all()
         if ratings.exists():
             return round(sum(r.score for r in ratings) / ratings.count(), 1)
         return 0
 
     @property
     def ratings_count(self):
-        """Get total number of ratings"""
-        return self.ratings.count()
+        # """Get total number of ratings"""
+        return self.recipe_ratings.count()
 
     @property
     def comments_count(self):
-        """Get total number of comments"""
+        # """Get total number of comments"""
         return self.comments.count()
 
     @property

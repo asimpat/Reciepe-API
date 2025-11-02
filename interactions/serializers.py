@@ -1,10 +1,10 @@
 from rest_framework import serializers
 from .models import Rating
-from users.serializers import UserSerializer
+from users.serializers import UserProfileSerializer
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    user = UserSerializer(read_only=True)
+    user = UserProfileSerializer(read_only=True)
     recipe_title = serializers.CharField(source='recipe.title', read_only=True)
 
     class Meta:
