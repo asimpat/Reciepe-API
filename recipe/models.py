@@ -169,7 +169,7 @@ class Rating(models.Model):
     recipe = models.ForeignKey(
         Recipe,
         on_delete=models.CASCADE,
-        related_name='ratings'
+        related_name='recipe_ratings'
     )
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
