@@ -4,9 +4,9 @@ from django.core.validators import MinValueValidator, MaxValueValidator
 
 
 class Rating(models.Model):
-    """
-    Rating model for recipes
-    """
+    # """
+    # Rating model for recipes
+    # """
     user = models.ForeignKey(
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
@@ -34,3 +34,4 @@ class Rating(models.Model):
 
     def __str__(self):
         return f"{self.user.username} rated {self.recipe.title}: {self.score}/5"
+
