@@ -44,18 +44,18 @@ class CommentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Comment
         fields = ['id', 'user', 'recipe', 'recipe_title',
-                  'text', 'is_author', 'created_at', 'updated_at']
+                  'comment', 'is_author', 'created_at', 'updated_at']
         read_only_fields = ['id', 'user', 'created_at', 'updated_at']
 
     def get_is_author(self, obj):
-        """Check if current user is the comment author"""
+        # """Check if current user is the comment author"""
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             return obj.user == request.user
         return False
 
-    def validate_text(self, value):
-        """Validate comment is not empty"""
+    def validate_comment(self, value):
+        # """Validate comment is not empty"""
         if not value.strip():
             raise serializers.ValidationError("Comment cannot be empty.")
         if len(value) < 2:
