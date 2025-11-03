@@ -65,14 +65,14 @@ class CommentSerializer(serializers.ModelSerializer):
 
 
 class CommentCreateUpdateSerializer(serializers.ModelSerializer):
-    """Simplified serializer for creating/updating comments"""
+    # """Simplified serializer for creating/updating comments"""
 
     class Meta:
         model = Comment
-        fields = ['text']
+        fields = ['comment']
 
-    def validate_text(self, value):
-        """Validate comment is not empty"""
+    def validate_comment(self, value):
+        # """Validate comment is not empty"""
         if not value.strip():
             raise serializers.ValidationError("Comment cannot be empty.")
         if len(value) < 2:
