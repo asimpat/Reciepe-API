@@ -22,14 +22,14 @@ class RatingSerializer(serializers.ModelSerializer):
 
 
 class RatingCreateUpdateSerializer(serializers.ModelSerializer):
-    """Simplified serializer for creating/updating ratings"""
+    # """Simplified serializer for creating/updating ratings"""
 
     class Meta:
         model = Rating
         fields = ['score']
 
     def validate_score(self, value):
-        """Validate rating score is between 1 and 5"""
+        # """Validate rating score is between 1 and 5"""
         if value < 1 or value > 5:
             raise serializers.ValidationError(
                 "Rating must be between 1 and 5.")
