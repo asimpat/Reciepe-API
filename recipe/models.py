@@ -161,7 +161,7 @@ class Recipe(models.Model):
 
     @property
     def saves_count(self):
-        """Get total number of saves"""
+        # """Get total number of saves"""
         return self.saved_by.count()
 
 

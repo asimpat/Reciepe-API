@@ -35,3 +35,31 @@ class Rating(models.Model):
     def __str__(self):
         return f"{self.user.username} rated {self.recipe.title}: {self.score}/5"
 
+
+class Comment(models.Model):
+    # """
+    # Comment model for recipes
+    # """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    recipe = models.ForeignKey(
+        'recipe.Recipe',
+        on_delete=models.CASCADE,
+        related_name='comments'
+    )
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        ordering = ['-created_at']
+        indexes = [
+            models.Index(fields=['recipe', '-created_at']),
+            models.Index(fields=['user', '-created_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} commented on {self.recipe.title}"
