@@ -273,7 +273,6 @@ class MySavedRecipesView(generics.ListAPIView):
         # Get just the recipes
         recipes = [saved.recipe for saved in saved_recipes]
         
-        from .serializers import RecipeListSerializer
         serializer = RecipeListSerializer(recipes, many=True, context={'request': request})
         
         return Response({
