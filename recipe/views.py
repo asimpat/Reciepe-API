@@ -10,7 +10,7 @@ from .serializers import (
 )
 from .permissions import IsAuthorOrReadOnly
 from django_filters.rest_framework import DjangoFilterBackend
-from interactions.models import Rating
+from interactions.models import Rating, SavedRecipe
 from interactions.serializers import RatingSerializer, RatingCreateUpdateSerializer
 
 
@@ -211,3 +211,43 @@ class MyRecipesView(generics.ListAPIView):
 
     def get_queryset(self):
         return Recipe.objects.filter(author=self.request.user).order_by('-created_at')
+
+
+class RecipeSaveView(generics.GenericAPIView):
+    # """
+    # POST: Save/bookmark a recipe (toggle)
+    # GET: Check if recipe is saved
+    # """
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        """Check if current user has saved this recipe"""
+        recipe = get_object_or_404(Recipe, pk=pk)
+        is_saved = SavedRecipe.objects.filter(
+            user=request.user, recipe=recipe).exists()
+
+        return Response({
+            "is_saved": is_saved
+        })
+
+    def post(self, request, pk):
+        """Toggle save/unsave recipe"""
+        recipe = get_object_or_404(Recipe, pk=pk)
+
+        # Check if user is trying to save their own recipe
+        if recipe.author == request.user:
+            return Response({
+                "error": "You cannot save your own recipe."
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        # Check if already saved
+        saved_recipe = SavedRecipe.objects.filter(
+            user=request.user, recipe=recipe).first()
+
+        if saved_recipe:
+            # Unsave
+            saved_recipe.delete()
+            return Response({
+                "message": f"'{recipe.title}' has been removed from your saved recipes.",
+                "is_saved": False
+            }, status=status.HTTP_200_OK)

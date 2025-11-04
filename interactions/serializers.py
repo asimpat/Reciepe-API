@@ -79,3 +79,18 @@ class CommentCreateUpdateSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError(
                 "Comment must be at least 2 characters long.")
         return value
+
+
+class SavedRecipeSerializer(serializers.ModelSerializer):
+    user = UserProfileSerializer(read_only=True)
+    recipe_details = serializers.SerializerMethodField()
+
+    class Meta:
+        model = SavedRecipe
+        fields = ['id', 'user', 'recipe', 'recipe_details', 'saved_at']
+        read_only_fields = ['id', 'user', 'saved_at']
+
+    def get_recipe_details(self, obj):
+        """Get basic recipe details"""
+        from recipe.serializers import RecipeListSerializer
+        return RecipeListSerializer(obj.recipe, context=self.context).data
