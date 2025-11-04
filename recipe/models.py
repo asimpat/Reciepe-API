@@ -185,3 +185,30 @@ class Rating(models.Model):
 
     def __str__(self):
         return f"{self.user.username} rated {self.recipe.title} ({self.score})"
+
+
+class SavedRecipe(models.Model):
+    # """
+    # users saving/favoriting recipes
+    # """
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name='saved_recipes'
+    )
+    recipe = models.ForeignKey(
+        'recipe.Recipe',
+        on_delete=models.CASCADE,
+        related_name='saved_by'
+    )
+    saved_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'recipe')  # One save per user per recipe
+        ordering = ['-saved_at']
+        indexes = [
+            models.Index(fields=['user', '-saved_at']),
+        ]
+
+    def __str__(self):
+        return f"{self.user.username} saved {self.recipe.title}"
