@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Rating, Comment
+from .models import Rating, Comment, SavedRecipe
 from users.serializers import UserProfileSerializer
 
 

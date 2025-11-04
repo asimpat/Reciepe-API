@@ -3,7 +3,8 @@ from .views import (
     RecipeListCreateView,
     RecipeDetailView,
     MyRecipesView,
-    RecipeRatingView
+    RecipeRatingView,
+    RecipeSaveView,
 )
 
 

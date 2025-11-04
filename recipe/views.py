@@ -251,3 +251,32 @@ class RecipeSaveView(generics.GenericAPIView):
                 "message": f"'{recipe.title}' has been removed from your saved recipes.",
                 "is_saved": False
             }, status=status.HTTP_200_OK)
+        else:
+            # Save
+            SavedRecipe.objects.create(user=request.user, recipe=recipe)
+            return Response({
+                "message": f"'{recipe.title}' has been saved to your favorites!",
+                "is_saved": True
+            }, status=status.HTTP_201_CREATED)
+
+
+class MySavedRecipesView(generics.ListAPIView):
+    # """
+    # GET: List all recipes saved by the current user
+    # """
+    permission_classes = [IsAuthenticated]
+    
+    def get(self, request):
+        """Get all saved recipes by current user"""
+        saved_recipes = SavedRecipe.objects.filter(user=request.user).select_related('recipe', 'recipe__author')
+        
+        # Get just the recipes
+        recipes = [saved.recipe for saved in saved_recipes]
+        
+        from .serializers import RecipeListSerializer
+        serializer = RecipeListSerializer(recipes, many=True, context={'request': request})
+        
+        return Response({
+            "count": len(recipes),
+            "saved_recipes": serializer.data
+        })
