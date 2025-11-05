@@ -112,11 +112,11 @@ class Recipe(models.Model):
     # Engagement Metrics
     views_count = models.IntegerField(default=0)
 
-    saved_by = models.ManyToManyField(
-        settings.AUTH_USER_MODEL,
-        related_name="saved_recipes",
-        blank=True
-    )
+    # saved_by = models.ManyToManyField(
+    #     settings.AUTH_USER_MODEL,
+    #     related_name="saved_recipes",
+    #     blank=True
+    # )
 
     # Timestamps
     created_at = models.DateTimeField(auto_now_add=True)
