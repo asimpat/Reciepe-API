@@ -20,7 +20,6 @@ class RatingSerializer(serializers.ModelSerializer):
                 "Rating must be between 1 and 5.")
         return value
 
-
 class RatingCreateUpdateSerializer(serializers.ModelSerializer):
     # """Simplified serializer for creating/updating ratings"""
 
