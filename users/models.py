@@ -23,3 +23,13 @@ class User(AbstractUser):
 
     class Meta:
         ordering = ['-created_at']
+    
+    @property
+    def followers_count(self):
+        # """Get number of followers"""
+        return self.followers.count()
+    
+    @property
+    def following_count(self):
+        # """Get number of users this user is following"""
+        return self.following.count()
