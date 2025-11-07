@@ -33,6 +33,7 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt', 
     'rest_framework_simplejwt.token_blacklist',
     'django_filters',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -164,6 +165,7 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',
         'rest_framework.filters.OrderingFilter',
     ],
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
 
 SIMPLE_JWT = {
@@ -173,4 +175,12 @@ SIMPLE_JWT = {
     'BLACKLIST_AFTER_ROTATION': True,
     # 'AUTH_HEADER_TYPES': ('Bearer',),
     # 'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+}
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Recipe API',
+    'DESCRIPTION': 'API for managing recipes, users, interactions, and notifications.',
+    'VERSION': '1.0.0',
+    'SERVE_INCLUDE_SCHEMA': False,
+    # OTHER SETTINGS
 }

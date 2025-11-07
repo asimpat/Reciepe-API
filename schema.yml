@@ -1,0 +1,1397 @@
+openapi: 3.0.3
+info:
+  title: Recipe API
+  version: 1.0.0
+  description: API for managing recipes, users, interactions, and notifications.
+paths:
+  /api/comments/{id}/:
+    get:
+      operationId: comments_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: ''
+    put:
+      operationId: comments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCreateUpdate'
+          description: ''
+    patch:
+      operationId: comments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedCommentCreateUpdate'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCreateUpdate'
+          description: ''
+    delete:
+      operationId: comments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - comments
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/:
+    get:
+      operationId: recipes_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeListList'
+          description: ''
+    post:
+      operationId: recipes_create
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeCreateUpdate'
+          description: ''
+  /api/recipes/{id}/:
+    get:
+      operationId: recipes_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Recipe'
+          description: ''
+    put:
+      operationId: recipes_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RecipeCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeCreateUpdate'
+          description: ''
+    patch:
+      operationId: recipes_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedRecipeCreateUpdate'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecipeCreateUpdate'
+          description: ''
+    delete:
+      operationId: recipes_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{id}/rate/:
+    get:
+      operationId: recipes_rate_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatingCreateUpdate'
+          description: ''
+    post:
+      operationId: recipes_rate_create
+      description: Rate a recipe (create or update)
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RatingCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/RatingCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/RatingCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RatingCreateUpdate'
+          description: ''
+    delete:
+      operationId: recipes_rate_destroy
+      description: Remove user's rating from a recipe
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/recipes/{id}/save/:
+    get:
+      operationId: recipes_save_retrieve
+      description: Check if current user has saved this recipe
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: recipes_save_create
+      description: Toggle save/unsave recipe
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/recipes/{recipe_pk}/comments/:
+    get:
+      operationId: recipes_comments_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - in: path
+        name: recipe_pk
+        schema:
+          type: integer
+        required: true
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedCommentList'
+          description: ''
+    post:
+      operationId: recipes_comments_create
+      parameters:
+      - in: path
+        name: recipe_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - recipes
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CommentCreateUpdate'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentCreateUpdate'
+          description: ''
+  /api/recipes/my-recipes/:
+    get:
+      operationId: recipes_my_recipes_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedRecipeListList'
+          description: ''
+  /api/recipes/saved-recipes/:
+    get:
+      operationId: recipes_saved_recipes_retrieve
+      description: Get all saved recipes by current user
+      tags:
+      - recipes
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/users/{username}/:
+    get:
+      operationId: users_retrieve
+      description: View any user's public profile
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/users/{username}/follow/:
+    get:
+      operationId: users_follow_retrieve
+      description: Check if current user is following this user
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: users_follow_create
+      description: Toggle follow/unfollow
+      parameters:
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/users/{username}/followers/:
+    get:
+      operationId: users_followers_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFollowList'
+          description: ''
+  /api/users/{username}/following/:
+    get:
+      operationId: users_following_list
+      parameters:
+      - name: ordering
+        required: false
+        in: query
+        description: Which field to use when ordering the results.
+        schema:
+          type: string
+      - name: page
+        required: false
+        in: query
+        description: A page number within the paginated result set.
+        schema:
+          type: integer
+      - name: search
+        required: false
+        in: query
+        description: A search term.
+        schema:
+          type: string
+      - in: path
+        name: username
+        schema:
+          type: string
+        required: true
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedFollowList'
+          description: ''
+  /api/users/login/:
+    post:
+      operationId: users_login_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/CustomTokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CustomTokenObtainPair'
+          description: ''
+  /api/users/profile/:
+    get:
+      operationId: users_profile_retrieve
+      description: |-
+        GET: Retrieve user profile
+        PUT/PATCH: Update user profile
+      tags:
+      - users
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    put:
+      operationId: users_profile_update
+      description: |-
+        GET: Retrieve user profile
+        PUT/PATCH: Update user profile
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+    patch:
+      operationId: users_profile_partial_update
+      description: |-
+        GET: Retrieve user profile
+        PUT/PATCH: Update user profile
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUserProfile'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserProfile'
+          description: ''
+  /api/users/register/:
+    post:
+      operationId: users_register_create
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistration'
+          description: ''
+  /api/users/token/refresh/:
+    post:
+      operationId: users_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+components:
+  schemas:
+    BlankEnum:
+      enum:
+      - ''
+    Comment:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          allOf:
+          - $ref: '#/components/schemas/UserProfile'
+          readOnly: true
+        recipe:
+          type: integer
+        recipe_title:
+          type: string
+          readOnly: true
+        comment:
+          type: string
+        is_author:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - comment
+      - created_at
+      - id
+      - is_author
+      - recipe
+      - recipe_title
+      - updated_at
+      - user
+    CommentCreateUpdate:
+      type: object
+      properties:
+        comment:
+          type: string
+      required:
+      - comment
+    CuisineTypeEnum:
+      enum:
+      - italian
+      - chinese
+      - mexican
+      - indian
+      - french
+      - japanese
+      - thai
+      - mediterranean
+      - american
+      - african
+      - other
+      type: string
+      description: |-
+        * `italian` - Italian
+        * `chinese` - Chinese
+        * `mexican` - Mexican
+        * `indian` - Indian
+        * `french` - French
+        * `japanese` - Japanese
+        * `thai` - Thai
+        * `mediterranean` - Mediterranean
+        * `american` - American
+        * `african` - African
+        * `other` - Other
+    CustomTokenObtainPair:
+      type: object
+      properties:
+        username:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - password
+      - username
+    DietaryTagsEnum:
+      enum:
+      - vegetarian
+      - vegan
+      - gluten_free
+      - dairy_free
+      - keto
+      - paleo
+      - low_carb
+      - halal
+      - kosher
+      - none
+      type: string
+      description: |-
+        * `vegetarian` - Vegetarian
+        * `vegan` - Vegan
+        * `gluten_free` - Gluten Free
+        * `dairy_free` - Dairy Free
+        * `keto` - Keto
+        * `paleo` - Paleo
+        * `low_carb` - Low Carb
+        * `halal` - Halal
+        * `kosher` - Kosher
+        * `none` - None
+    DifficultyLevelEnum:
+      enum:
+      - easy
+      - medium
+      - hard
+      type: string
+      description: |-
+        * `easy` - Easy
+        * `medium` - Medium
+        * `hard` - Hard
+    Follow:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        bio:
+          type: string
+          nullable: true
+        profile_picture:
+          type: string
+          format: uri
+          nullable: true
+        recipes_count:
+          type: string
+          readOnly: true
+        followers_count:
+          type: integer
+          readOnly: true
+        following_count:
+          type: integer
+          readOnly: true
+        is_following:
+          type: string
+          readOnly: true
+      required:
+      - followers_count
+      - following_count
+      - id
+      - is_following
+      - recipes_count
+      - username
+    MealTypeEnum:
+      enum:
+      - breakfast
+      - lunch
+      - dinner
+      - snack
+      - dessert
+      - appetizer
+      - beverage
+      type: string
+      description: |-
+        * `breakfast` - Breakfast
+        * `lunch` - Lunch
+        * `dinner` - Dinner
+        * `snack` - Snack
+        * `dessert` - Dessert
+        * `appetizer` - Appetizer
+        * `beverage` - Beverage
+    PaginatedCommentList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Comment'
+    PaginatedFollowList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Follow'
+    PaginatedRecipeListList:
+      type: object
+      required:
+      - count
+      - results
+      properties:
+        count:
+          type: integer
+          example: 123
+        next:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=4
+        previous:
+          type: string
+          nullable: true
+          format: uri
+          example: http://api.example.org/accounts/?page=2
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/RecipeList'
+    PatchedCommentCreateUpdate:
+      type: object
+      properties:
+        comment:
+          type: string
+    PatchedRecipeCreateUpdate:
+      type: object
+      description: Serializer for creating and updating recipes
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        ingredients:
+          type: string
+          description: List ingredients, one per line
+        instructions:
+          type: string
+          description: Step-by-step cooking instructions
+        cuisine_type:
+          $ref: '#/components/schemas/CuisineTypeEnum'
+        meal_type:
+          $ref: '#/components/schemas/MealTypeEnum'
+        dietary_tags:
+          oneOf:
+          - $ref: '#/components/schemas/DietaryTagsEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        prep_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Preparation time in minutes
+        cook_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Cooking time in minutes
+        servings:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+        difficulty_level:
+          $ref: '#/components/schemas/DifficultyLevelEnum'
+        image:
+          type: string
+          format: uri
+          nullable: true
+    PatchedUserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        email:
+          type: string
+          format: email
+          readOnly: true
+        bio:
+          type: string
+          nullable: true
+        profile_picture:
+          type: string
+          format: uri
+          nullable: true
+        followers_count:
+          type: string
+          readOnly: true
+        following_count:
+          type: string
+          readOnly: true
+        is_following:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+    RatingCreateUpdate:
+      type: object
+      properties:
+        score:
+          type: integer
+          maximum: 5
+          minimum: 1
+          description: Rating from 1 to 5 stars
+      required:
+      - score
+    Recipe:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        author:
+          allOf:
+          - $ref: '#/components/schemas/UserProfile'
+          readOnly: true
+        author_username:
+          type: string
+          readOnly: true
+        ingredients:
+          type: string
+          description: List ingredients, one per line
+        instructions:
+          type: string
+          description: Step-by-step cooking instructions
+        cuisine_type:
+          $ref: '#/components/schemas/CuisineTypeEnum'
+        meal_type:
+          $ref: '#/components/schemas/MealTypeEnum'
+        dietary_tags:
+          oneOf:
+          - $ref: '#/components/schemas/DietaryTagsEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        prep_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Preparation time in minutes
+        cook_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Cooking time in minutes
+        total_time:
+          type: string
+          readOnly: true
+        servings:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+        difficulty_level:
+          $ref: '#/components/schemas/DifficultyLevelEnum'
+        image:
+          type: string
+          format: uri
+          nullable: true
+        average_rating:
+          type: string
+          readOnly: true
+        ratings_count:
+          type: string
+          readOnly: true
+        comments_count:
+          type: string
+          readOnly: true
+        saves_count:
+          type: string
+          readOnly: true
+        views_count:
+          type: integer
+          readOnly: true
+        is_saved:
+          type: string
+          readOnly: true
+        user_rating:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - author
+      - author_username
+      - average_rating
+      - comments_count
+      - created_at
+      - description
+      - id
+      - ingredients
+      - instructions
+      - is_saved
+      - ratings_count
+      - saves_count
+      - title
+      - total_time
+      - updated_at
+      - user_rating
+      - views_count
+    RecipeCreateUpdate:
+      type: object
+      description: Serializer for creating and updating recipes
+      properties:
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        ingredients:
+          type: string
+          description: List ingredients, one per line
+        instructions:
+          type: string
+          description: Step-by-step cooking instructions
+        cuisine_type:
+          $ref: '#/components/schemas/CuisineTypeEnum'
+        meal_type:
+          $ref: '#/components/schemas/MealTypeEnum'
+        dietary_tags:
+          oneOf:
+          - $ref: '#/components/schemas/DietaryTagsEnum'
+          - $ref: '#/components/schemas/BlankEnum'
+        prep_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Preparation time in minutes
+        cook_time:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+          nullable: true
+          description: Cooking time in minutes
+        servings:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+        difficulty_level:
+          $ref: '#/components/schemas/DifficultyLevelEnum'
+        image:
+          type: string
+          format: uri
+          nullable: true
+      required:
+      - description
+      - ingredients
+      - instructions
+      - title
+    RecipeList:
+      type: object
+      description: Simplified serializer for listing recipes
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        title:
+          type: string
+          maxLength: 200
+        description:
+          type: string
+        author_username:
+          type: string
+          readOnly: true
+        cuisine_type:
+          $ref: '#/components/schemas/CuisineTypeEnum'
+        meal_type:
+          $ref: '#/components/schemas/MealTypeEnum'
+        difficulty_level:
+          $ref: '#/components/schemas/DifficultyLevelEnum'
+        image:
+          type: string
+          format: uri
+          nullable: true
+        average_rating:
+          type: string
+          readOnly: true
+        total_time:
+          type: string
+          readOnly: true
+        servings:
+          type: integer
+          maximum: 2147483647
+          minimum: 1
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - author_username
+      - average_rating
+      - created_at
+      - description
+      - id
+      - title
+      - total_time
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    UserProfile:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          readOnly: true
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+        email:
+          type: string
+          format: email
+          readOnly: true
+        bio:
+          type: string
+          nullable: true
+        profile_picture:
+          type: string
+          format: uri
+          nullable: true
+        followers_count:
+          type: string
+          readOnly: true
+        following_count:
+          type: string
+          readOnly: true
+        is_following:
+          type: string
+          readOnly: true
+        created_at:
+          type: string
+          format: date-time
+          readOnly: true
+        updated_at:
+          type: string
+          format: date-time
+          readOnly: true
+      required:
+      - created_at
+      - email
+      - followers_count
+      - following_count
+      - id
+      - is_following
+      - updated_at
+      - username
+    UserRegistration:
+      type: object
+      properties:
+        username:
+          type: string
+          description: Required. 150 characters or fewer. Letters, digits and @/./+/-/_
+            only.
+          pattern: ^[\w.@+-]+$
+          maxLength: 150
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        password:
+          type: string
+          writeOnly: true
+        password2:
+          type: string
+          writeOnly: true
+          title: Confirm Password
+        bio:
+          type: string
+          nullable: true
+      required:
+      - email
+      - password
+      - password2
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
