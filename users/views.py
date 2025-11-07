@@ -113,7 +113,7 @@ class FollowUserView(APIView):
 
 class FollowersListView(generics.ListAPIView):
     # """
-    # GET: List all followers of a user
+    # GET: List all followers of a user 
     # """
     serializer_class = FollowSerializer
 
