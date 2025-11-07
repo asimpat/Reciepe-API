@@ -114,7 +114,7 @@ class FollowSerializer(serializers.ModelSerializer):
             'username',
             'bio',
             'profile_picture',
-            'recipes_count',
+            'recipes_count', 
             'followers_count',
             'following_count',
             'is_following'
