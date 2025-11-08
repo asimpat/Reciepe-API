@@ -110,7 +110,7 @@ class FollowUserView(APIView):
                 "is_following": True
             }, status=status.HTTP_200_OK)
 
-
+ 
 class FollowersListView(generics.ListAPIView):
     # """
     # GET: List all followers of a user 
