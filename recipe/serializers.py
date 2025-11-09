@@ -52,14 +52,14 @@ class RecipeSerializer(serializers.ModelSerializer):
         ]
 
     def get_is_saved(self, obj):
-        """Check if current user has saved this recipe"""
+        # """Check if current user has saved this recipe"""
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             return obj.saved_by.filter(id=request.user.id).exists()
         return False
 
     def get_user_rating(self, obj):
-        """Get current user's rating for this recipe"""
+        # """Get current user's rating for this recipe"""
         request = self.context.get('request')
         if request and request.user.is_authenticated:
             rating = obj.ratings.filter(id=request.user.id).first()
