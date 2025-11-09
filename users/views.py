@@ -33,10 +33,10 @@ class LoginView(TokenObtainPairView):
 
 
 class ProfileView(generics.RetrieveUpdateAPIView):
-    """
-    GET: Retrieve user profile
-    PUT/PATCH: Update user profile
-    """
+    # """
+    # GET: Retrieve user profile
+    # PUT/PATCH: Update user profile
+    # """
     serializer_class = UserProfileSerializer
     permission_classes = [permissions.IsAuthenticated, IsOwnerOrReadOnly]
 
