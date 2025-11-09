@@ -68,7 +68,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return None
 
     def validate_title(self, value):
-        """Ensure title is not empty and has minimum length"""
+        # """Ensure title is not empty and has minimum length"""
         if len(value.strip()) < 5:
             raise serializers.ValidationError(
                 "Title must be at least 5 characters long."
@@ -76,7 +76,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         return value
 
     def validate_ingredients(self, value):
-        """Ensure ingredients field is not empty"""
+        # """Ensure ingredients field is not empty"""
         if not value.strip():
             raise serializers.ValidationError(
                 "Ingredients cannot be empty."
