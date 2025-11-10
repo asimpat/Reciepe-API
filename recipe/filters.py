@@ -3,9 +3,9 @@ from .models import Recipe
 
 
 class RecipeFilter(django_filters.FilterSet):
-    """
-    Custom filter for recipes
-    """
+    # """
+    # Custom filter for recipes
+    # """
     # Exact match filters
     cuisine = django_filters.CharFilter(
         field_name='cuisine_type', lookup_expr='iexact')
