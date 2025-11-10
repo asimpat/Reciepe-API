@@ -90,7 +90,7 @@ class RecipeSerializer(serializers.ModelSerializer):
                 "Instructions cannot be empty."
             )
         return value
-
+ 
 
 class RecipeListSerializer(serializers.ModelSerializer):
     """Simplified serializer for listing recipes"""
