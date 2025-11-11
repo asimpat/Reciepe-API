@@ -79,7 +79,7 @@ class RecipeSerializer(serializers.ModelSerializer):
         # """Ensure ingredients field is not empty"""
         if not value.strip():
             raise serializers.ValidationError(
-                "Ingredients cannot be empty."
+                "Ingredients cannot be empty." 
             )
         return value
 
