@@ -91,7 +91,7 @@ class RecipeSerializer(serializers.ModelSerializer):
             )
         return value
  
-
+ 
 class RecipeListSerializer(serializers.ModelSerializer):
     """Simplified serializer for listing recipes"""
     author_username = serializers.CharField(
