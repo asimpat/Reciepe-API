@@ -155,4 +155,3 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
             })
 
         return attrs
-    
