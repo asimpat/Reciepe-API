@@ -33,3 +33,4 @@ class User(AbstractUser):
     def following_count(self):
         # """Get number of users this user is following"""
         return self.following.count()
+    
