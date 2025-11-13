@@ -23,7 +23,7 @@ class User(AbstractUser):
  
     class Meta:
         ordering = ['-created_at']
-    
+     
     @property
     def followers_count(self):
         # """Get number of followers"""
