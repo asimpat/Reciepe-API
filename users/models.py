@@ -16,7 +16,7 @@ class User(AbstractUser):
         symmetrical=False,
         related_name='followers',
         blank=True
-    )
+    ) 
 
     def __str__(self):
         return self.username
