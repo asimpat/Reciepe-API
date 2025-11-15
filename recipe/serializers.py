@@ -116,7 +116,6 @@ class RecipeListSerializer(serializers.ModelSerializer):
             'created_at',
         ]
 
-
 class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
     """Serializer for creating and updating recipes"""
 
