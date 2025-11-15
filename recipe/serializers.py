@@ -137,7 +137,7 @@ class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
         ]
 
     def validate(self, attrs):
-        """Additional validation"""
+        # """Additional validation"""
         if attrs.get('prep_time') and attrs['prep_time'] < 0:
             raise serializers.ValidationError({
                 "prep_time": "Preparation time cannot be negative."
