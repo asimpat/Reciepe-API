@@ -117,7 +117,7 @@ class RecipeListSerializer(serializers.ModelSerializer):
         ]
 
 class RecipeCreateUpdateSerializer(serializers.ModelSerializer):
-    """Serializer for creating and updating recipes"""
+    # """Serializer for creating and updating recipes"""
 
     class Meta:
         model = Recipe
