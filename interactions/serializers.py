@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from .models import Rating, Comment, SavedRecipe
 from users.serializers import UserProfileSerializer
-
+ 
 
 class RatingSerializer(serializers.ModelSerializer):
     user = UserProfileSerializer(read_only=True)
