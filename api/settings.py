@@ -180,7 +180,7 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
-
+ 
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
